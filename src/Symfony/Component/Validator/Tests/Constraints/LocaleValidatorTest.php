@@ -97,6 +97,10 @@ class LocaleValidatorTest extends ConstraintValidatorTestCase
             'message' => 'myMessage',
         ]);
 
+        // INTL_MAX_LOCALE_LEN seems not defined on Windows php-8.1.0
+        if (!defined('INTL_MAX_LOCALE_LEN')) {
+            define('INTL_MAX_LOCALE_LEN', 85);
+        }
         $locale = str_repeat('a', \INTL_MAX_LOCALE_LEN + 1);
         $this->validator->validate($locale, $constraint);
 
